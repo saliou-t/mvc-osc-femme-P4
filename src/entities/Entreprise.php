@@ -1,24 +1,94 @@
 <?php
-
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Annotation as ORM;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\Common\Collections\ArrayCollection;
+/**
+ * @Entity
+ * @Table(name="entreprise")
+ */
 class Entreprise{
+    /**
+     * @Id
+     * @Column(type="integer")
+     * @GeneratedValue
+     */
     private $id;
-    private $nom;
-    private $dateCreation;
-    private $regimeJ;
-    private $registreC;
-    private $latitude;
-    private $longitude;
-    private $ninea;
-    private $contraF;
-    private $nombreEmployer;
-    private $cotisationS;
-    private $pageWeb;
-    private $quatier;
 
     /**
-    * @ManyToOne(targetEntity="Entreprise", mappedBy="id")
+    * @Column(type="string", length=32, nullable=false, unique=true)
     */
-    private $secteur;
+    private $nom;
+
+    /**
+    * @Column(type="date", nullable=false)
+    */
+    private $dateCreation;
+
+    /**
+    * @Column(type="text", nullable=true)
+    */
+    private $regimeJ;
+
+    /**
+    * @Column(type="text", nullable=true)
+    */
+    private $registreC;
+
+    /**
+    * @Column(type="float", nullable=true)
+    */
+    private $latitude;
+
+    /**
+    * @Column(type="float", nullable=true)
+    */
+    private $longitude;
+
+    /**
+    * @Column(type="string", length=55, nullable=false, unique=true)
+    */
+    private $ninea;
+
+    /**
+    * @Column(type="text", nullable=true)
+    */
+    private $contraF;
+
+    /**
+    * @Column(type="integer", nullable=false)
+    */
+    private $nombreEmployer;
+
+    /**
+    * @Column(type="string", length=3, nullable=true)
+    */
+    private $cotisationS;
+
+    /**
+    * @Column(type="string", length=100, nullable=true)
+    */
+    private $pageWeb;
+ 
+    /**
+     * Many Quartier have one Entreprise. This is the owning side.
+     * @ManyToOne(targetEntity="Quartier", inversedBy="quartier_id")
+     * @JoinColumn(name="quzrtier_id", referencedColumnName="id")
+     */
+
+    private $quatier_id;
+
+    /**
+     * One Secteur has many Entreprises. This is the inverse side.
+     * @OneToMany(targetEntity="Entreprise", mappedBy="entreprises")
+     */
+    private $secteurs;
 
     public function __construct()
     {
@@ -122,11 +192,19 @@ class Entreprise{
     }
 
     public function getQuartier(){
-        return $this->quatier;   
+        return $this->quatier_id;   
     }
 
     public function setQuartier($quartier){
-        $this->quartier = $quartier;
+        $this->quatier_id = $quartier;
+    }
+
+    public function getSecteur(){
+        return $this->secteurs;   
+    }
+
+    public function setSecteur($secteurs){
+        $this->secteurs = $secteurs;
     }
 }
 

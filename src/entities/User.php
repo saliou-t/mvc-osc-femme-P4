@@ -1,5 +1,12 @@
 <?php
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Annotation as ORM;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -33,11 +40,13 @@ class User{
     * @Column(type="string", length=8, nullable=false)
     */
     private $password;
-    
+   
     /**
-     * @ManyToMany(targetEntity="Role", mappedBy="id")
-    */
-    private $role;
+     * Many User have one Role. This is the owning side.
+     * @ManyToOne(targetEntity="Role", inversedBy="users")
+     * @JoinColumn(name="user_role", referencedColumnName="id")
+     */
+    private $userRole;
     
 
     public function __construct()
@@ -86,11 +95,11 @@ class User{
     }
 
     public function getRole(){
-        return $this->role;   
+        return $this->userRole;   
     }
 
-    public function setRole($role){
-        $this->$role = $role;
+    public function setRole($userRole){
+        $this->$userRole = $userRole;
     }
 }
 ?>

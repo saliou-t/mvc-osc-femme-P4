@@ -1,5 +1,17 @@
 <?php
-
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Annotation as ORM;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\Common\Collections\ArrayCollection;
+/**
+ * @Entity
+ * @Table(name="secteur")
+ */
 class Secteur{
      /**
      * @Id
@@ -9,23 +21,25 @@ class Secteur{
     private $id;
 
     /**
-    * @Column(type="string", length=32, nullable=false)
-    */
+     * @Column(type="string", length=32, nullable=false)
+     */
     private $nom;
 
     /**
-    * @Column(type="text",  nullable=true)
-    */
+     * @Column(type="text",  nullable=true)
+     */
     private $libelle;
 
     /**
-    * @OneToMany(targetEntity="Entreprise", mappedBy="id")
-    */
-    private $entreprise;
+     * Many Entreprise have one Secteur. This is the owning side.
+     * @ManyToOne(targetEntity="Entreprise", inversedBy="entreprises")
+     * @JoinColumn(name="entrepriseId", referencedColumnName="id")
+     */
+    private $entreprise_id;
     
    
     public function __construct(){
-        
+        $this->entreprise_id = new ArrayCollection();
     }
 
     public function getId(){
@@ -53,13 +67,12 @@ class Secteur{
     }
 
     public function getEntreprise(){
-        return $this->entreprise;   
+        return $this->entreprise_id;   
     }
    
     public function setEntreprise($entreprise){
-        $this->entreprise = $entreprise;
+        $this->entreprise_id = $entreprise;
     }
-
 }
 
 ?>
