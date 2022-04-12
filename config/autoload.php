@@ -1,4 +1,7 @@
 <?php
+error_reporting(-1);
+ini_set("display_errors", 1);
+
     class Autoload{
         static function register(){
             spl_autoload_register(array(__CLASS__, "autoload"));
@@ -16,7 +19,7 @@
                 require_once str_replace("\\", "/", $class. "php");
             }
             else {
-                echo "lkkl";
+                die('Svp merci de faire un use avant '.$class);
             }
         }
     }  

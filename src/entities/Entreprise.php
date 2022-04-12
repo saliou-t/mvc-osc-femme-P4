@@ -79,7 +79,7 @@ class Entreprise{
     /**
      * Many Quartier have one Entreprise. This is the owning side.
      * @ManyToOne(targetEntity="Quartier", inversedBy="quartier_id")
-     * @JoinColumn(name="quzrtier_id", referencedColumnName="id")
+     * @JoinColumn(name="quartier_id", referencedColumnName="id")
      */
 
     private $quatier_id;

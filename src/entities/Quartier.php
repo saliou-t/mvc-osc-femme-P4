@@ -37,7 +37,7 @@ class Quartier{
 
     /**
      * One Quartier has many Entreprises. This is the inverse side.
-     * @OneToMany(targetEntity="Entreprise", mappedBy="quartier_id")
+     * @OneToMany(targetEntity="Entreprise", mappedBy="entreprise_id")
      */
     private $entreprises;
 
